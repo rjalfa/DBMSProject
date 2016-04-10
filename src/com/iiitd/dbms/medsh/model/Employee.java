@@ -2,6 +2,8 @@ package com.iiitd.dbms.medsh.model;
 
 import java.util.Date;
 
+import com.iiitd.dbms.medsh.record.EmployeeRecord;
+
 public class Employee {
 	private long uid;
 	private String name;
@@ -10,6 +12,34 @@ public class Employee {
 	private String contact;
 	private Date dateOfJoining;
 	private double payroll;
+	private String userName;
+	private String password;
+	
+	public class EscalateAccess
+	{
+		public String getPassword() {return password;}
+		private EscalateAccess() {};
+	}
+	
+	
+	
+	public void importAccessKey(EmployeeRecord E)
+	{
+		E.setKey(new EscalateAccess());
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public boolean comparePassword(String password) {
+		return this.password.equals(password);
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public long getUid() {
 		return uid;
 	}
