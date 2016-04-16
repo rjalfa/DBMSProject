@@ -6,12 +6,9 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
 import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.util.GlobalVars;
 
 public class EmployeeRecord {
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost/DBMS_test";
-	static final String DB_USER = "root";
-	static final String DB_PASS = "rounaq";
 	private Employee.EscalateAccess accessPassKey;
 	private JdbcRowSet rowSet = null;
 	
@@ -24,14 +21,13 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			Class.forName(JDBC_DRIVER);
+			Class.forName(GlobalVars.JDBC_DRIVER);
 			RowSetFactory factory = RowSetProvider.newFactory(); 
 			rowSet = factory.createJdbcRowSet();
-			rowSet.setUrl(DB_URL);
-			rowSet.setUsername(DB_USER);
-			rowSet.setPassword(DB_PASS);
-			rowSet.setCommand("SELECT * FROM Employee");
-			rowSet.execute();
+			rowSet.setUrl(GlobalVars.DB_URL);
+			rowSet.setUsername(GlobalVars.DB_USER);
+			rowSet.setPassword(GlobalVars.DB_PASS);
+			
 		}
 		catch(SQLException e)
 		{
@@ -47,6 +43,8 @@ public class EmployeeRecord {
 	{
 		try
 		{
+			rowSet.setCommand("SELECT * FROM Employee");
+			rowSet.execute();
 			rowSet.moveToInsertRow();
 			rowSet.updateLong("uid", e.getUid());
 			rowSet.updateString("name", e.getName());
@@ -70,6 +68,10 @@ public class EmployeeRecord {
 	{
 		try
 		{
+			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+e.getUid());
+			rowSet.execute();
+			if(!rowSet.next()) throw new SQLException("Empty Result Set");
+			else rowSet.beforeFirst();
 			rowSet.updateLong("uid", e.getUid());
 			rowSet.updateString("name", e.getName());
 			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
@@ -81,7 +83,6 @@ public class EmployeeRecord {
 			e.importAccessKey(this);
 			rowSet.updateString("password",accessPassKey.getPassword());
 			rowSet.updateRow();
-			rowSet.moveToCurrentRow();
 		}
 		catch(SQLException ex)
 		{
@@ -98,11 +99,14 @@ public class EmployeeRecord {
 		return e;
 	}
 	
-	public void delete()
+	public void delete(long uid)
 	{
 		try
 		{
-			rowSet.moveToCurrentRow();
+			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+uid);
+			rowSet.execute();
+			if(!rowSet.next()) if(!rowSet.next()) throw new SQLException("Empty Result Set");
+			else rowSet.beforeFirst();
 			rowSet.deleteRow();
 		}
 		catch(SQLException ex)
@@ -124,6 +128,10 @@ public class EmployeeRecord {
 		Employee e = new Employee();
 		try
 		{
+			rowSet.setCommand("SELECT * FROM Employee");
+			rowSet.execute();
+			if(!rowSet.next()) throw new SQLException("Empty Result Set");
+			else rowSet.beforeFirst();
 			rowSet.first();
 			populateData(e);
 		}
@@ -139,6 +147,10 @@ public class EmployeeRecord {
 		Employee e = new Employee();
 		try
 		{
+			rowSet.setCommand("SELECT * FROM Employee");
+			rowSet.execute();
+			if(!rowSet.next()) throw new SQLException("Empty Result Set");
+			else rowSet.beforeFirst();
 			rowSet.last();
 			populateData(e);
 		}
@@ -154,7 +166,30 @@ public class EmployeeRecord {
 		Employee e = new Employee();
 		try
 		{
-			rowSet.last();
+			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+uid);
+			rowSet.execute();
+			if(!rowSet.next()) throw new SQLException("Empty Result Set");
+			else rowSet.beforeFirst();
+			rowSet.first();
+			populateData(e);
+		}
+		catch(SQLException ex)
+		{
+			ex.printStackTrace();
+		}
+		return e;
+	}
+	
+	public Employee find(String username)
+	{
+		Employee e = new Employee();
+		try
+		{
+			rowSet.setCommand("SELECT * FROM Employee WHERE username="+username);
+			rowSet.execute();
+			if(!rowSet.next()) throw new SQLException("Empty Result Set");
+			else rowSet.beforeFirst();
+			rowSet.first();
 			populateData(e);
 		}
 		catch(SQLException ex)
@@ -184,6 +219,4 @@ public class EmployeeRecord {
 		}
 		return e;
 	}
-	
-	
 }
