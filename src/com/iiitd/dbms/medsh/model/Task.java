@@ -3,8 +3,16 @@ package com.iiitd.dbms.medsh.model;
 import java.util.Date;
 
 public class Task {
+	private int task_id;
 	private Date datetime;
 	private String task_type;
+	
+	public int getTask_id() {
+		return task_id;
+	}
+	public void setTask_id(int task_id) {
+		this.task_id = task_id;
+	}
 	public Date getDatetime() {
 		return datetime;
 	}
