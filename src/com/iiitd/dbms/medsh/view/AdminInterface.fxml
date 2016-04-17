@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.adm.phd.controller.AdminController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iiitd.dbms.medsh.view.AdminController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="148.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="620.0" minWidth="10.0" prefWidth="620.0" />
@@ -75,7 +75,8 @@
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll" GridPane.rowIndex="8" />
                               <TextField fx:id="nPayroll" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                               <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Create User" GridPane.rowIndex="12" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Reset form" GridPane.rowIndex="13" />
+                              <Button mnemonicParsing="false" onAction="#resetNForm" prefHeight="26.0" prefWidth="226.0" text="Reset form" GridPane.rowIndex="13" />
+                              <CheckBox fx:id="nAdmin" mnemonicParsing="false" text="Allow Administrator Access ?" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                            </children>
                         </GridPane>
                      </children></AnchorPane>

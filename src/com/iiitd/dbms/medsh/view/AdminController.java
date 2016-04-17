@@ -1,25 +1,21 @@
 package com.iiitd.dbms.medsh.view;
 
+import static com.iiitd.dbms.medsh.util.GlobalVars.EmployeeTypes;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.iiitd.dbms.medsh.Main;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
-public class AdminController implements Initializable{
-	
-	private Main mainApp;
-	private Stage primaryStage;
+public class AdminController extends InterfaceController{
 	
 	//FXML Controls
 	//New User Tab
@@ -32,9 +28,23 @@ public class AdminController implements Initializable{
 	@FXML private TextField nPayroll;
 	@FXML private TextField nUsername;
 	@FXML private TextField nPassword;
+	@FXML private CheckBox nAdmin;
 	@FXML private Button nCreateUser;
 	@FXML private Button nResetForm;
 	
+	@FXML private void resetNForm()
+	{
+		nName.setText("");
+		nDOB.setValue(null);
+		nDOJ.setValue(null);
+		makeNumeric(nContact);
+		nContact.setText("");
+		nType.setItems(EmployeeTypes);
+		nPayroll.setText("");
+		nUsername.setText("");
+		nPassword.setText("");
+		nAdmin.setSelected(false);
+	}
 	
 	public void setMainApp(Main mainApp)
 	{
@@ -43,36 +53,6 @@ public class AdminController implements Initializable{
 	
 
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+		resetNForm();
 	}
-	
-	//Numeric Text Fields Constraint Event
-	private void makeNumeric(TextField text)
-	{
-		text.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>()
-		{
-			public void handle( KeyEvent t )
-			{
-				char ar[] = t.getCharacter().toCharArray();
-				char ch = ar[t.getCharacter().toCharArray().length - 1];
-				if (!(ch >= '0' && ch <= '9')) t.consume();
-			}
-		});
-	}
-	
-	//Numeric Text Fields (Floating Point Values) Constraint Event
-	private void makeNumericF(TextField text)
-	{
-		text.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>()
-		{
-			public void handle( KeyEvent t )
-			{
-				char ar[] = t.getCharacter().toCharArray();
-				char ch = ar[t.getCharacter().toCharArray().length - 1];
-				if (!(ch >= '0' && ch <= '9' || ch == '.')) t.consume();
-			}
-		});
-	}
-	
 }

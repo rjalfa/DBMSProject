@@ -21,8 +21,6 @@ public class Employee {
 		private EscalateAccess() {};
 	}
 	
-	
-	
 	public void importAccessKey(EmployeeRecord E)
 	{
 		E.setKey(new EscalateAccess());
