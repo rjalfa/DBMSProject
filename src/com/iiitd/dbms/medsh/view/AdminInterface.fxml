@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.adm.phd.controller.AdminController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="148.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="620.0" minWidth="10.0" prefWidth="620.0" />
@@ -53,24 +53,27 @@
                           </rowConstraints>
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-                              <TextField GridPane.columnIndex="1" />
+                              <TextField fx:id="nName" GridPane.columnIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Of Birth" GridPane.rowIndex="1" />
-                              <DatePicker prefHeight="26.0" prefWidth="401.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="nDOB" prefHeight="26.0" prefWidth="401.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" GridPane.rowIndex="2" />
-                              <RadioButton mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <RadioButton mnemonicParsing="false" text="Female" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <RadioButton mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="nGenderSelector" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton mnemonicParsing="false" text="Female" toggleGroup="$nGenderSelector" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Joining" GridPane.rowIndex="4" />
-                              <DatePicker prefHeight="26.0" prefWidth="374.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="nDOJ" prefHeight="26.0" prefWidth="374.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" GridPane.rowIndex="5" />
-                              <TextField prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="nContact" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Desired Username" GridPane.rowIndex="9" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                              <TextField fx:id="nUsername" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Desired Password" GridPane.rowIndex="10" />
-                              <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                              <PasswordField fx:id="nPassword" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Type" GridPane.rowIndex="7" />
-                              <ChoiceBox prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <ChoiceBox fx:id="nType" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll" GridPane.rowIndex="8" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <TextField fx:id="nPayroll" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                               <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Create User" GridPane.rowIndex="12" />
                               <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Reset form" GridPane.rowIndex="13" />
                            </children>
