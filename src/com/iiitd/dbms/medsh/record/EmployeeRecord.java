@@ -46,7 +46,7 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee");
 			rowSet.execute();
 			rowSet.moveToInsertRow();
-			rowSet.updateLong("uid", e.getUid());
+			//rowSet.updateLong("uid", e.getUid());
 			rowSet.updateString("name", e.getName());
 			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
 			rowSet.updateString("gender", e.getGender());
@@ -56,6 +56,7 @@ public class EmployeeRecord {
 			rowSet.updateString("username", e.getUserName());
 			e.importAccessKey(this);
 			rowSet.updateString("password",accessPassKey.getPassword());
+			rowSet.insertRow();
 		}
 		catch(SQLException ex)
 		{

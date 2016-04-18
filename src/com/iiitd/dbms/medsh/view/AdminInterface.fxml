@@ -74,7 +74,7 @@
                               <ChoiceBox fx:id="nType" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll" GridPane.rowIndex="8" />
                               <TextField fx:id="nPayroll" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Create User" GridPane.rowIndex="12" />
+                              <Button mnemonicParsing="false" onAction="#createNewUser" prefHeight="26.0" prefWidth="226.0" text="Create User" GridPane.rowIndex="12" />
                               <Button mnemonicParsing="false" onAction="#resetNForm" prefHeight="26.0" prefWidth="226.0" text="Reset form" GridPane.rowIndex="13" />
                               <CheckBox fx:id="nAdmin" mnemonicParsing="false" text="Allow Administrator Access ?" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                            </children>
