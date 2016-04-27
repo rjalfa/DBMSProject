@@ -1,5 +1,11 @@
 package com.iiitd.dbms.medsh.view;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
 import com.iiitd.dbms.medsh.Main;
 
 import javafx.event.EventHandler;
@@ -56,5 +62,19 @@ public abstract class InterfaceController implements Initializable {
 			return (Double.parseDouble(s) >= 0);
 		}
 		return false;
+	}
+	protected boolean checkLong(String s)
+	{
+		if(s.matches("^[0-9]*$"))
+		{
+			return (Long.parseLong(s) >= 0);
+		}
+		return false;
+	}
+	
+	public static LocalDate fromDate(Date date) {
+	    Instant instant = Instant.ofEpochMilli(date.getTime());
+	    return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+	        .toLocalDate();
 	}
 }

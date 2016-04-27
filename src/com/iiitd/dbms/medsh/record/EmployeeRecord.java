@@ -50,10 +50,12 @@ public class EmployeeRecord {
 			rowSet.updateString("name", e.getName());
 			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
 			rowSet.updateString("gender", e.getGender());
+			rowSet.updateString("type", e.getType());
 			rowSet.updateString("contact", e.getContact());
 			rowSet.updateDate("doj", new java.sql.Date(e.getDateOfJoining().getTime()));
 			rowSet.updateDouble("payroll", e.getPayroll());
 			rowSet.updateString("username", e.getUserName());
+			rowSet.updateBoolean("isAdmin", e.getIsAdmin());
 			e.importAccessKey(this);
 			rowSet.updateString("password",accessPassKey.getPassword());
 			rowSet.insertRow();
@@ -77,10 +79,12 @@ public class EmployeeRecord {
 			rowSet.updateString("name", e.getName());
 			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
 			rowSet.updateString("gender", e.getGender());
+			rowSet.updateString("type", e.getType());
 			rowSet.updateString("contact", e.getContact());
 			rowSet.updateDate("doj", new java.sql.Date(e.getDateOfJoining().getTime()));
 			rowSet.updateDouble("payroll", e.getPayroll());
 			rowSet.updateString("username", e.getUserName());
+			rowSet.updateBoolean("isAdmin",e.getIsAdmin());
 			e.importAccessKey(this);
 			rowSet.updateString("password",accessPassKey.getPassword());
 			rowSet.updateRow();
@@ -210,6 +214,8 @@ public class EmployeeRecord {
 			e.setGender(rowSet.getString("gender"));
 			e.setContact(rowSet.getString("contact"));
 			e.setDateOfJoining(rowSet.getDate("doj"));
+			e.setType(rowSet.getString("type"));
+			e.setIsAdmin(rowSet.getBoolean("isAdmin"));
 			e.setPayroll(rowSet.getDouble("payroll"));
 			e.setUserName(rowSet.getString("username"));
 			e.setPassword(rowSet.getString("password"));

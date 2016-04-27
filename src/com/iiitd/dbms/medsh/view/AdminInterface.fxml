@@ -74,8 +74,8 @@
                               <ChoiceBox fx:id="nType" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll" GridPane.rowIndex="8" />
                               <TextField fx:id="nPayroll" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                              <Button mnemonicParsing="false" onAction="#createNewUser" prefHeight="26.0" prefWidth="226.0" text="Create User" GridPane.rowIndex="12" />
-                              <Button mnemonicParsing="false" onAction="#resetNForm" prefHeight="26.0" prefWidth="226.0" text="Reset form" GridPane.rowIndex="13" />
+                              <Button fx:id="nCreateUser" mnemonicParsing="false" onAction="#createNewUser" prefHeight="26.0" prefWidth="226.0" text="Create User" GridPane.rowIndex="12" />
+                              <Button fx:id="nResetForm" mnemonicParsing="false" onAction="#resetNForm" prefHeight="26.0" prefWidth="226.0" text="Reset form" GridPane.rowIndex="13" />
                               <CheckBox fx:id="nAdmin" mnemonicParsing="false" text="Allow Administrator Access ?" GridPane.columnIndex="1" GridPane.rowIndex="11" />
                            </children>
                         </GridPane>
@@ -113,30 +113,34 @@
                           </rowConstraints>
                            <children>
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="uName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date Of Birth" GridPane.rowIndex="4" />
-                              <DatePicker prefHeight="26.0" prefWidth="401.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="uDOB" prefHeight="26.0" prefWidth="401.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" GridPane.rowIndex="5" />
-                              <RadioButton mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <RadioButton mnemonicParsing="false" text="Female" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                              <RadioButton fx:id="uGenderMale" mnemonicParsing="false" text="Male" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="uGenderSelector" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton fx:id="uGenderFemale" mnemonicParsing="false" text="Female" toggleGroup="$uGenderSelector" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Joining" GridPane.rowIndex="7" />
-                              <DatePicker prefHeight="26.0" prefWidth="374.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                              <DatePicker fx:id="uDOJ" prefHeight="26.0" prefWidth="374.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Contact" GridPane.rowIndex="8" />
-                              <TextField prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                              <TextField fx:id="uContact" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" GridPane.rowIndex="12" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                              <TextField fx:id="uUsername" GridPane.columnIndex="1" GridPane.rowIndex="12" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.rowIndex="13" />
-                              <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                              <PasswordField fx:id="uPassword" GridPane.columnIndex="1" GridPane.rowIndex="13" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Employee Type" GridPane.rowIndex="10" />
-                              <ChoiceBox prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                              <ChoiceBox fx:id="uType" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll" GridPane.rowIndex="11" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Modify and Save" GridPane.rowIndex="15" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Ignore Changes" GridPane.rowIndex="16" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Delete User" GridPane.rowIndex="17" />
+                              <TextField fx:id="uPayroll" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                              <Button fx:id="uUpdateUser" mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Modify and Save" GridPane.rowIndex="15" />
+                              <Button fx:id="uResetForm" mnemonicParsing="false" onAction="#resetUForm" prefHeight="26.0" prefWidth="226.0" text="Ignore Changes" GridPane.rowIndex="16" />
+                              <Button fx:id="uDeleteUser" mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Delete User" GridPane.rowIndex="17" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search User Record" />
-                              <TextField promptText="Enter UID / username" GridPane.columnIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Search Database" GridPane.rowIndex="1" />
+                              <TextField fx:id="uUID" promptText="Enter UID / username" GridPane.columnIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#searchOldUser" prefHeight="26.0" prefWidth="226.0" text="Search Database" GridPane.rowIndex="1" />
+                              <CheckBox fx:id="uAdmin" mnemonicParsing="false" text="Allow Administrator Access ?" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                            </children>
                         </GridPane>
                      </children>

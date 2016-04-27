@@ -11,9 +11,11 @@ public class Employee {
 	private String gender;
 	private String contact;
 	private Date dateOfJoining;
+	private String type;
 	private double payroll;
 	private String userName;
 	private String password;
+	private Boolean isAdmin;
 	
 	public class EscalateAccess
 	{
@@ -79,6 +81,22 @@ public class Employee {
 	}
 	public void setPayroll(double payroll) {
 		this.payroll = payroll;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 }
