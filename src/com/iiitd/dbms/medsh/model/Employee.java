@@ -5,7 +5,6 @@ import java.util.Date;
 import com.iiitd.dbms.medsh.record.EmployeeRecord;
 
 public class Employee {
-	private long uid;
 	private String name;
 	private Date dateOfBirth;
 	private String gender;
@@ -16,7 +15,16 @@ public class Employee {
 	private String userName;
 	private String password;
 	private Boolean isAdmin;
+	private LoginDetails LD;
 	
+	public LoginDetails getLD() {
+		return LD;
+	}
+
+	public void setLD(LoginDetails lD) {
+		LD = lD;
+	}
+
 	public class EscalateAccess
 	{
 		public String getPassword() {return password;}
@@ -40,12 +48,7 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public long getUid() {
-		return uid;
-	}
-	public void setUid(long uid) {
-		this.uid = uid;
-	}
+
 	public String getName() {
 		return name;
 	}

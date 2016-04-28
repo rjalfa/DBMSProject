@@ -245,7 +245,7 @@ public class AdminController extends InterfaceController{
 		if(validateOldUser())
 		{
 			try {
-				empData.delete(updateEmployee.getUid());
+				empData.delete(updateEmployee.getLD().getUid());
 			} catch (EmptySetException e) {
 				System.out.println("User Not Found in Database");
 			}
@@ -306,7 +306,7 @@ public class AdminController extends InterfaceController{
 		System.out.println("[Interface Control] Current User Object: "+GlobalVars.current_user);
 		Employee currentUser = GlobalVars.current_user;
 		cname.setText(currentUser.getName());
-		cuid.setText("UID: "+currentUser.getUid());
+		cuid.setText("UID: "+currentUser.getLD().getUid());
 		ctype.setText("Type: "+currentUser.getType());
 		switch(currentUser.getType())
 		{
@@ -329,7 +329,7 @@ public class AdminController extends InterfaceController{
 	public void initialize(URL location, ResourceBundle resources) {
 		resetNForm();
 		resetUForm();
-		uidColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getUid()));
+		uidColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getLD().getUid()));
 		userColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getUserName()));
 		dateColumn.setCellValueFactory(cellData -> createProperty(dateFormat(cellData.getValue().getDateOfJoining())));
 	}

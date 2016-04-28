@@ -72,7 +72,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+e.getUid());
+			rowSet.setCommand("SELECT * FROM Employee WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails where LoginDetails.uid="+e.getLD().getUid()+")");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -134,7 +134,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+uid);
+			rowSet.setCommand("SELECT * FROM Employee WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails WHERE LoginDetails.uid="+uid+")");
 			rowSet.execute();
 			if(!rowSet.next()) if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -206,7 +206,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+uid);
+			rowSet.setCommand("SELECT * FROM Employee WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails WHERE LoginDetails.uid="+uid+")");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -250,7 +250,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			e.setUid(rowSet.getLong("uid"));
+//			e.setUid(rowSet.getLong("uid"));
 			e.setName(rowSet.getString("name"));
 			e.setDateOfBirth(rowSet.getDate("dob"));
 			e.setGender(rowSet.getString("gender"));

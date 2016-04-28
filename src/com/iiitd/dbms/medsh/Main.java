@@ -45,7 +45,7 @@ public class Main extends Application {
 	public void logOutUser()
 	{
 		try {
-			GlobalVars.current_user.setUid(-1);
+			GlobalVars.current_user.getLD().setUid(-1);
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/LoginPage.fxml"));
 			BorderPane root = (BorderPane) loader.load();

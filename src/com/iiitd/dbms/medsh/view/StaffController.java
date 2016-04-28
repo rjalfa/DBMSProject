@@ -189,7 +189,7 @@ public class StaffController extends InterfaceController {
 		System.out.println("[Interface Control] Current User Object: "+GlobalVars.current_user);
 		Employee currentUser = GlobalVars.current_user;
 		cname.setText(currentUser.getName());
-		cuid.setText("UID: "+currentUser.getUid());
+		cuid.setText("UID: "+currentUser.getLD().getUid());
 		ctype.setText("Type: "+currentUser.getType());
 		if(currentUser.getIsAdmin()) 
 		{
