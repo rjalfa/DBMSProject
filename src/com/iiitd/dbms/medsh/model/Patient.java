@@ -1,6 +1,6 @@
 package com.iiitd.dbms.medsh.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Patient {
 	private int pid;

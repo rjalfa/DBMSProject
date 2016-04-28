@@ -130,7 +130,7 @@ public abstract class InterfaceController implements Initializable {
 	
 	protected SimpleObjectProperty<HBox> buttonLink(CellDataFeatures<Task, HBox> cellData)
 	{
-		Button btn = new Button("Expanded Task");
+		Button btn = new Button("Expanded Task");	
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			 @Override
 			 public void handle(ActionEvent e) {
