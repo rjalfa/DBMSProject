@@ -11,7 +11,7 @@ public class GlobalVars {
 	public static final String DB_URL = "jdbc:mysql://localhost/MedSH";
 	public static final String DB_USER = "dbms_user";
 	public static final String DB_PASS = "dbms_password";
-	public static ObservableList<String> EmployeeTypes = FXCollections.observableArrayList("Doctor","Nurse","Staff");
+	public static ObservableList<String> EmployeeTypes = FXCollections.observableArrayList("Doctor","Nurse","Staff","Accounts");
 	public static Employee current_user = new Employee();
 	public static EmployeeRecord empRecord = new EmployeeRecord();
 }

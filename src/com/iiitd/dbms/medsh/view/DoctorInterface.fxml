@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iiitd.dbms.medsh.view.DoctorController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="148.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="620.0" minWidth="10.0" prefWidth="620.0" />
@@ -89,17 +89,17 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Anonymous" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <Text fx:id="cname" strokeType="OUTSIDE" strokeWidth="0.0" text="Anonymous" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UID: 0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Text fx:id="cuid" strokeType="OUTSIDE" strokeWidth="0.0" text="UID: 0" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Authority: Limited" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Text fx:id="cauth" strokeType="OUTSIDE" strokeWidth="0.0" text="Authority: Limited" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font size="16.0" />
                </font>
@@ -109,10 +109,17 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Administrator" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Nurse" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Staff" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Button fx:id="adminButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Administrator" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="doctorButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="nurseButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Nurse" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="staffButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Staff" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Text fx:id="ctype" layoutX="53.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Button fx:id="accountsButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Accounts" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#destroySession" prefHeight="26.0" prefWidth="138.0" text="Log Out" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
          </children>
       </GridPane>
    </children>

@@ -36,8 +36,25 @@ public class Main extends Application {
 		}
 	}
 	
+	public void logOutUser()
+	{
+		try {
+			GlobalVars.current_user.setUid(-1);
+			FXMLLoader loader = new FXMLLoader();
+			this.primaryStage = primaryStage;
+			loader.setLocation(Main.class.getResource("view/LoginPage.fxml"));
+			BorderPane root = (BorderPane) loader.load();
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void loadGUI(Stage primaryStage, String Interface) {
 		try {
+			System.out.println("[SYSTEM] Loading "+Interface);
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/"+Interface+".fxml"));
 			GridPane root = (GridPane) loader.load();
@@ -66,9 +83,8 @@ public class Main extends Application {
 			Employee current_user = GlobalVars.current_user;
 			if(current_user.comparePassword(password)) 
 			{
-				System.out.println("[SYSTEM] Current User Object: " + GlobalVars.current_user);
 				if(current_user.getIsAdmin()) loadGUI(primaryStage,"AdminInterface");
-				else loadGUI(primaryStage,"view/"+current_user.getType()+"Interface");
+				else loadGUI(primaryStage,current_user.getType()+"Interface");
 			}
 			else throw new Exception("User unauthenticated");
 		}

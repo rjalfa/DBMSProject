@@ -14,6 +14,7 @@ import com.iiitd.dbms.medsh.util.GlobalVars;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,6 +66,20 @@ public abstract class InterfaceController implements Initializable {
 		});
 	}
 	
+	@FXML private void switchContext(ActionEvent evt)
+	{
+		Button eSource = (Button)evt.getSource();
+		primaryStage = (Stage) eSource.getScene().getWindow();
+		switch(eSource.getId())
+		{
+			case "adminButton":mainApp.loadGUI(primaryStage, "AdminInterface");break;
+			case "doctorButton":mainApp.loadGUI(primaryStage, "DoctorInterface");break;
+			case "nurseButton":mainApp.loadGUI(primaryStage, "NurseInterface");break;
+			case "staffButton":mainApp.loadGUI(primaryStage, "StaffInterface");break;
+			case "accountsButton":mainApp.loadGUI(primaryStage, "AccountsInterface");break;
+		}
+	}
+	
 	//Superclass Valid/Invalid CSS Apply method
 	protected void setValid(Control control) {control.setStyle("-fx-border-color: none;");}
 	protected void setInvalid(Control control) {control.setStyle("-fx-border-color: red;");}
@@ -99,5 +114,11 @@ public abstract class InterfaceController implements Initializable {
 	public String dateFormat(Date d)
 	{
 		return df.format(d);
+	}
+	
+	@FXML protected void destroySession()
+	{
+		System.out.println("[Interface Control] Destroy session request");
+		mainApp.logOutUser();
 	}
 }

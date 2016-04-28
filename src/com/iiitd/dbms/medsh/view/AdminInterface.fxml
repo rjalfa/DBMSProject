@@ -147,7 +147,7 @@
             </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Employee Records">
+            <Tab onSelectionChanged="#refreshTable" text="Employee Records">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -220,15 +220,17 @@
                   <Font size="16.0" />
                </font>
             </Text>
-            <Button fx:id="adminButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Administrator" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <Button fx:id="doctorButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-            <Button fx:id="nurseButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Nurse" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-            <Button fx:id="staffButton" disable="true" mnemonicParsing="false" prefHeight="26.0" prefWidth="138.0" text="Staff" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+            <Button fx:id="adminButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Administrator" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Button fx:id="doctorButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+            <Button fx:id="nurseButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Nurse" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+            <Button fx:id="staffButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Staff" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
             <Text fx:id="ctype" layoutX="53.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font size="16.0" />
                </font>
             </Text>
+            <Button fx:id="accountsButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Accounts" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#destroySession" prefHeight="26.0" prefWidth="138.0" text="Log Out" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
          </children>
       </GridPane>
    </children>

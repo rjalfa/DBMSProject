@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40" fx:controller="com.iiitd.dbms.medsh.view.AccountsController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iiitd.dbms.medsh.view.StaffController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="148.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="620.0" minWidth="10.0" prefWidth="620.0" />
@@ -26,27 +26,27 @@
       </ImageView>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="3">
         <tabs>
-          <Tab text="Payments Done">
+          <Tab text="Pharmacy">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-          <Tab text="Payments Remaining">
+          <Tab text="Person Database">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
-            <Tab text="Hospital Account">
+            <Tab text="Allocate Room">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Logs">
+            <Tab text="Accept Payments">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
             </Tab>
-            <Tab text="Archived Accounts">
+            <Tab text="Account Management">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
               </content>
@@ -104,7 +104,7 @@
             <Button fx:id="doctorButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Doctor" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
             <Button fx:id="nurseButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Nurse" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
             <Button fx:id="staffButton" disable="true" mnemonicParsing="false" onAction="#switchContext" prefHeight="26.0" prefWidth="138.0" text="Staff" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-            <Text fx:id="ctype" layoutX="53.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Accounts" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Text fx:id="ctype" layoutX="53.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: Staff" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font size="16.0" />
                </font>

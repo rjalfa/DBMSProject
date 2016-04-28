@@ -16,6 +16,7 @@ import com.iiitd.dbms.medsh.util.GlobalVars;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -28,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class AdminController extends InterfaceController{
 	
@@ -41,6 +43,8 @@ public class AdminController extends InterfaceController{
 	@FXML protected Button doctorButton;
 	@FXML protected Button nurseButton;
 	@FXML protected Button staffButton;
+	@FXML protected Button accountsButton;
+	@FXML protected Button logOuButton;
 		
 	//New User Tab
 	@FXML private TextField nName;
@@ -146,6 +150,7 @@ public class AdminController extends InterfaceController{
 			e.setPayroll(Double.parseDouble(nPayroll.getText()));
 			e.setUserName(nUsername.getText().trim());
 			e.setPassword(nPassword.getText());
+			e.setIsAdmin(nAdmin.isSelected());
 			empData.create(e);
 		}
 	}
@@ -280,20 +285,26 @@ public class AdminController extends InterfaceController{
 		switch(currentUser.getType())
 		{
 			case "Doctor":doctorButton.setDisable(false);break;
-			case "Nurse":doctorButton.setDisable(false);break;
-			case "Staff":doctorButton.setDisable(false);break;
+			case "Nurse":nurseButton.setDisable(false);break;
+			case "Staff":staffButton.setDisable(false);break;
+			case "Accounts":accountsButton.setDisable(false);break;
+			
 		}
+	}
+	
+	@FXML public void refreshTable()
+	{
+		ArrayList<Employee> temp = new ArrayList<>();
+		empData.all(temp);
+		userData = FXCollections.observableArrayList(temp);
+		userTable.setItems(userData);
 	}
 	
 	public void initialize(URL location, ResourceBundle resources) {
 		resetNForm();
 		resetUForm();
-		ArrayList<Employee> temp = new ArrayList<>();
-		empData.all(temp);
-		userData = FXCollections.observableArrayList(temp);
 		uidColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getUid()));
 		userColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getUserName()));
 		dateColumn.setCellValueFactory(cellData -> createProperty(dateFormat(cellData.getValue().getDateOfJoining())));
-		userTable.setItems(userData);
 	}
 }

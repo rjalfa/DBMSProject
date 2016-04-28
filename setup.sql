@@ -1,7 +1,7 @@
 create database MedSH;
 use MedSH;
 create table Department(dept_id bigint PRIMARY KEY AUTO_INCREMENT, dept_name varchar(100) NOT NULL);
-create table Employee(uid bigint PRIMARY KEY AUTO_INCREMENT, name varchar(100) NOT NULL, dob Date NOT NULL, gender varchar(100) NOT NULL, contact varchar(100) NOT NULL, doj Date NOT NULL, payroll bigint NOT NULL, username varchar(100) NOT NULL, password varchar(100) NOT NULL, type varchar(20) NOT NULL CHECK (type IN ('Doctor','Nurse','Staff')) , isAdmin boolean NOT NULL);
+create table Employee(uid bigint PRIMARY KEY AUTO_INCREMENT, name varchar(100) NOT NULL, dob Date NOT NULL, gender varchar(100) NOT NULL, contact varchar(100) NOT NULL, doj Date NOT NULL, payroll bigint NOT NULL, username varchar(100) NOT NULL, password varchar(100) NOT NULL, type varchar(20) NOT NULL CHECK (type IN ('Doctor','Nurse','Staff','Accounts')) , isAdmin boolean NOT NULL);
 create table Patient(pid bigint PRIMARY KEY AUTO_INCREMENT, dob Date NOT NULL, name varchar(100) NOT NULL);	
 create table Schedule(s_id bigint PRIMARY KEY AUTO_INCREMENT, doctor_id bigint NOT NULL, INDEX doctor_index (doctor_id), FOREIGN KEY (doctor_id) references Employee(uid) ON DELETE CASCADE);
 create table Task(task_id bigint PRIMARY KEY AUTO_INCREMENT, s_id bigint NOT NULL, pid bigint NOT NULL, date_time Datetime NOT NULL, task_type varchar(100) NOT NULL, INDEX patient_index (pid), INDEX sched_index (s_id), FOREIGN KEY (pid) references Patient(pid) ON DELETE CASCADE, FOREIGN KEY (s_id) references Schedule(s_id) ON DELETE CASCADE);
