@@ -6,6 +6,9 @@ public class Task {
 	private int task_id;
 	private Date datetime;
 	private String task_type;
+	private String doctorName;
+	private long doctorID;
+	private Patient patient;
 	
 	public int getTask_id() {
 		return task_id;
@@ -24,5 +27,23 @@ public class Task {
 	}
 	public void setTask_type(String task_type) {
 		this.task_type = task_type;
+	}
+	public String getDoctorName() {
+		return doctorName;
+	}
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+	public long getDoctorID() {
+		return doctorID;
+	}
+	public void setDoctorID(long doctorID) {
+		this.doctorID = doctorID;
+	}
+	public Patient getPatient() {
+		return patient;
+	}
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }

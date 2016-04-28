@@ -1,5 +1,6 @@
 package com.iiitd.dbms.medsh.view;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -9,9 +10,9 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import com.iiitd.dbms.medsh.Main;
-import com.iiitd.dbms.medsh.model.Employee;
-import com.iiitd.dbms.medsh.util.GlobalVars;
+import com.iiitd.dbms.medsh.model.Task;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -20,9 +21,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Control;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.text.Text;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 public abstract class InterfaceController implements Initializable {
@@ -114,6 +116,29 @@ public abstract class InterfaceController implements Initializable {
 	public String dateFormat(Date d)
 	{
 		return df.format(d);
+	}
+	
+	protected void taskExpandHandler(long tid)
+	{
+		try {
+			mainApp.showTaskExpanded(tid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	protected SimpleObjectProperty<HBox> buttonLink(CellDataFeatures<Task, HBox> cellData)
+	{
+		Button btn = new Button("Expanded Task");
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+			 @Override
+			 public void handle(ActionEvent e) {
+				 taskExpandHandler(cellData.getValue().getTask_id());
+		}});
+		HBox t = new HBox();
+		t.getChildren().add(btn);
+		return new SimpleObjectProperty<HBox>(t);
 	}
 	
 	@FXML protected void destroySession()
