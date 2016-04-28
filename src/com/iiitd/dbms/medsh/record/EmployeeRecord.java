@@ -46,7 +46,6 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee");
 			rowSet.execute();
 			rowSet.moveToInsertRow();
-			//rowSet.updateLong("uid", e.getUid());
 			rowSet.updateString("name", e.getName());
 			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
 			rowSet.updateString("gender", e.getGender());
@@ -74,8 +73,7 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+e.getUid());
 			rowSet.execute();
 			if(!rowSet.next()) throw new SQLException("Empty Result Set");
-			else rowSet.beforeFirst();
-			rowSet.updateLong("uid", e.getUid());
+			else {rowSet.beforeFirst();rowSet.next();}
 			rowSet.updateString("name", e.getName());
 			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
 			rowSet.updateString("gender", e.getGender());
@@ -111,7 +109,7 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+uid);
 			rowSet.execute();
 			if(!rowSet.next()) if(!rowSet.next()) throw new SQLException("Empty Result Set");
-			else rowSet.beforeFirst();
+			else {rowSet.beforeFirst();rowSet.next();}
 			rowSet.deleteRow();
 		}
 		catch(SQLException ex)
@@ -136,7 +134,7 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee");
 			rowSet.execute();
 			if(!rowSet.next()) throw new SQLException("Empty Result Set");
-			else rowSet.beforeFirst();
+			else {rowSet.beforeFirst();rowSet.next();}
 			rowSet.first();
 			populateData(e);
 		}
@@ -155,7 +153,7 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee");
 			rowSet.execute();
 			if(!rowSet.next()) throw new SQLException("Empty Result Set");
-			else rowSet.beforeFirst();
+			else {rowSet.beforeFirst();rowSet.next();}
 			rowSet.last();
 			populateData(e);
 		}
@@ -174,7 +172,7 @@ public class EmployeeRecord {
 			rowSet.setCommand("SELECT * FROM Employee WHERE uid="+uid);
 			rowSet.execute();
 			if(!rowSet.next()) throw new SQLException("Empty Result Set");
-			else rowSet.beforeFirst();
+			else {rowSet.beforeFirst();rowSet.next();}
 			rowSet.first();
 			populateData(e);
 		}
@@ -190,10 +188,10 @@ public class EmployeeRecord {
 		Employee e = new Employee();
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE username="+username);
+			rowSet.setCommand("SELECT * FROM Employee WHERE username=\""+username+"\"");
 			rowSet.execute();
 			if(!rowSet.next()) throw new SQLException("Empty Result Set");
-			else rowSet.beforeFirst();
+			else {rowSet.beforeFirst();rowSet.next();}
 			rowSet.first();
 			populateData(e);
 		}

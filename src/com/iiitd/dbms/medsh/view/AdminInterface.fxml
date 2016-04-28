@@ -134,9 +134,9 @@
                               <ChoiceBox fx:id="uType" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Payroll" GridPane.rowIndex="11" />
                               <TextField fx:id="uPayroll" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                              <Button fx:id="uUpdateUser" mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Modify and Save" GridPane.rowIndex="15" />
+                              <Button fx:id="uUpdateUser" mnemonicParsing="false" onAction="#updateOldUser" prefHeight="26.0" prefWidth="226.0" text="Modify and Save" GridPane.rowIndex="15" />
                               <Button fx:id="uResetForm" mnemonicParsing="false" onAction="#resetUForm" prefHeight="26.0" prefWidth="226.0" text="Ignore Changes" GridPane.rowIndex="16" />
-                              <Button fx:id="uDeleteUser" mnemonicParsing="false" prefHeight="26.0" prefWidth="226.0" text="Delete User" GridPane.rowIndex="17" />
+                              <Button fx:id="uDeleteUser" mnemonicParsing="false" onAction="#deleteOldUser" prefHeight="26.0" prefWidth="226.0" text="Delete User" GridPane.rowIndex="17" />
                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search User Record" />
                               <TextField fx:id="uUID" promptText="Enter UID / username" GridPane.columnIndex="1" />
                               <Button mnemonicParsing="false" onAction="#searchOldUser" prefHeight="26.0" prefWidth="226.0" text="Search Database" GridPane.rowIndex="1" />

@@ -57,7 +57,7 @@ public class AdminController extends InterfaceController{
 	@FXML private RadioButton uGenderFemale;
 	
 	private EmployeeRecord empData = new EmployeeRecord();
-	
+	private Employee updateEmployee = null;
 	@FXML private void resetNForm()
 	{
 		nName.setText("");
@@ -104,6 +104,7 @@ public class AdminController extends InterfaceController{
 		uPassword.setText("");
 		setValid(uPassword);
 		uAdmin.setSelected(false);
+		updateEmployee =  null;
 	}
 	
 	@FXML private void createNewUser()
@@ -151,8 +152,13 @@ public class AdminController extends InterfaceController{
 				uDOJ.setValue(fromDate(e.getDateOfJoining()));
 				uPayroll.setText(e.getPayroll()+"");
 				uUsername.setText(e.getUserName());
+				updateEmployee = e;
 			}
-			else setInvalid(uUID);
+			else 
+			{
+				setInvalid(uUID);
+				updateEmployee = null;
+			}
 		}
 		catch(Exception e)
 		{
@@ -161,27 +167,46 @@ public class AdminController extends InterfaceController{
 		}
 	}
 	
+	@FXML private void updateOldUser()
+	{
+		System.out.println("[INFO] Updating user");
+		if(validateOldUser())
+		{
+			System.out.println("[INFO] Prechecks Passed");
+			empData.update(updateEmployee);
+		}
+	}
+	
+	@FXML private void deleteOldUser()
+	{
+		if(validateOldUser())
+		{
+			empData.delete(updateEmployee.getUid());
+			updateEmployee = null;
+		}
+	}
+	
 	private boolean validateOldUser()
 	{
 		boolean flag = true;
-		if(nName.getText().trim().length() == 0) {flag=false;setInvalid(nName);}
-		else setValid(nName);
-		if(nContact.getText().trim().length() == 0) {flag=false;setInvalid(nContact);}
-		else setValid(nContact);
-		if(nDOB.getValue() == null || (nDOB.getValue() != null && !nDOB.getValue().isBefore(LocalDate.now().minusYears(20)))) {flag=false;setInvalid(nDOB);}
-		else setValid(nDOB);
-		if(nGenderSelector.getSelectedToggle() == null) {flag=false;for(Toggle i:nGenderSelector.getToggles()) setInvalid((RadioButton)i);}
-		else for(Toggle i:nGenderSelector.getToggles()) setValid((RadioButton)i);
-		if(nDOJ.getValue() == null || (nDOJ.getValue() != null && !nDOJ.getValue().isAfter(LocalDate.now().minusMonths(6)))) {flag=false;setInvalid(nDOJ);}
-		else setValid(nDOJ);
-		if(nPayroll.getText().trim().length() == 0 || !checkDouble(nPayroll.getText()) || Double.parseDouble(nPayroll.getText()) < 1000) {flag=false;setInvalid(nPayroll);}
-		else setValid(nPayroll);
-		if(nType.getValue() == null) {flag=false;setInvalid(nType);}
-		else setValid(nType);
-		if(nUsername.getText().trim().length() == 0) {flag=false;setInvalid(nUsername);}
-		else setValid(nUsername);
-		if(nPassword.getText().length() == 0) {flag=false;setInvalid(nPassword);}
-		else setValid(nPassword);
+		if(uName.getText().trim().length() == 0) {flag=false;setInvalid(uName);}
+		else setValid(uName);
+		if(uContact.getText().trim().length() == 0) {flag=false;setInvalid(uContact);}
+		else setValid(uContact);
+		if(uDOB.getValue() == null || (uDOB.getValue() != null && !uDOB.getValue().isBefore(LocalDate.now().minusYears(20)))) {flag=false;setInvalid(uDOB);}
+		else setValid(uDOB);
+		if(uGenderSelector.getSelectedToggle() == null) {flag=false;for(Toggle i:uGenderSelector.getToggles()) setInvalid((RadioButton)i);}
+		else for(Toggle i:uGenderSelector.getToggles()) setValid((RadioButton)i);
+		if(uDOJ.getValue() == null || (uDOJ.getValue() != null && !uDOJ.getValue().isAfter(LocalDate.now().minusMonths(6)))) {flag=false;setInvalid(uDOJ);}
+		else setValid(uDOJ);
+		if(uPayroll.getText().trim().length() == 0 || !checkDouble(uPayroll.getText()) || Double.parseDouble(uPayroll.getText()) < 1000) {flag=false;setInvalid(uPayroll);}
+		else setValid(uPayroll);
+		if(uType.getValue() == null) {flag=false;setInvalid(uType);}
+		else setValid(uType);
+		if(uUsername.getText().trim().length() == 0) {flag=false;setInvalid(uUsername);}
+		else setValid(uUsername);
+		if(uPassword.getText().length() == 0 || (uPassword.getText().length() > 0 && !updateEmployee.comparePassword(uPassword.getText()))) {flag=false;setInvalid(uPassword);}
+		else setValid(uPassword);
 		return flag;
 	}
 	
