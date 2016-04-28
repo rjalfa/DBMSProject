@@ -1,5 +1,7 @@
 package com.iiitd.dbms.medsh.view;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,23 +9,34 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import com.iiitd.dbms.medsh.Main;
+import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.util.GlobalVars;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public abstract class InterfaceController implements Initializable {
 	
 	protected Main mainApp;
 	protected Stage primaryStage;
+	//FXML Controls	
+	protected final DateFormat df = new SimpleDateFormat("EEE, MMM d, yyyy"); 
 	
 	public void setMainApp(Main mainApp)
 	{
 		this.mainApp = mainApp;
 	}
+	
+	public abstract void setCurrentUser();
 	//Numeric Text Fields Constraint Event
 	protected void makeNumeric(TextField text)
 	{
@@ -76,5 +89,15 @@ public abstract class InterfaceController implements Initializable {
 	    Instant instant = Instant.ofEpochMilli(date.getTime());
 	    return LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 	        .toLocalDate();
+	}
+	
+	public StringProperty createProperty(String s)
+	{
+		return new SimpleStringProperty(s);
+	}
+	
+	public String dateFormat(Date d)
+	{
+		return df.format(d);
 	}
 }

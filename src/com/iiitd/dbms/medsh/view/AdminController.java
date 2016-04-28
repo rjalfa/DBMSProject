@@ -5,25 +5,43 @@ import static com.iiitd.dbms.medsh.util.GlobalVars.EmployeeTypes;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.iiitd.dbms.medsh.model.Employee;
 import com.iiitd.dbms.medsh.record.EmployeeRecord;
+import com.iiitd.dbms.medsh.util.EmptySetException;
+import com.iiitd.dbms.medsh.util.GlobalVars;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.text.Text;
 
 public class AdminController extends InterfaceController{
 	
-	//FXML Controls
+	//Current User Details
+	@FXML protected Employee currentUser;
+	@FXML protected Text cname;
+	@FXML protected Text cuid;
+	@FXML protected Text ctype;
+	@FXML protected Text cauth;
+	@FXML protected Button adminButton;
+	@FXML protected Button doctorButton;
+	@FXML protected Button nurseButton;
+	@FXML protected Button staffButton;
+		
 	//New User Tab
 	@FXML private TextField nName;
 	@FXML private DatePicker nDOB;
@@ -56,7 +74,14 @@ public class AdminController extends InterfaceController{
 	@FXML private RadioButton uGenderMale;
 	@FXML private RadioButton uGenderFemale;
 	
-	private EmployeeRecord empData = new EmployeeRecord();
+	//Listing Users Tab
+	private ObservableList<Employee> userData = null;
+	@FXML private TableView<Employee> userTable;
+	@FXML private TableColumn<Employee,String> uidColumn;
+	@FXML private TableColumn<Employee,String> userColumn;
+	@FXML private TableColumn<Employee,String> dateColumn;
+	
+	private EmployeeRecord empData = GlobalVars.empRecord;
 	private Employee updateEmployee = null;
 	@FXML private void resetNForm()
 	{
@@ -132,9 +157,9 @@ public class AdminController extends InterfaceController{
 			if(uUID.getText().trim().length()>0)
 			{
 				setValid(uUID);
-				Employee e = null;
-				if(checkLong(uUID.getText().trim())) e = empData.find(Long.parseLong(uUID.getText().trim()));
-				else e = empData.find(uUID.getText().trim());
+				Employee e = new Employee();
+				if(checkLong(uUID.getText().trim())) e = empData.find(Long.parseLong(uUID.getText().trim()),e);
+				else e = empData.find(uUID.getText().trim(),e);
 				uName.setText(e.getName());
 				uDOB.setValue(fromDate(e.getDateOfBirth()));
 				if(e.getGender().equals("Male"))
@@ -163,7 +188,7 @@ public class AdminController extends InterfaceController{
 		catch(Exception e)
 		{
 			setInvalid(uUID);
-			e.printStackTrace();
+			System.out.println("Empty Set. User not found in database");
 		}
 	}
 	
@@ -173,7 +198,14 @@ public class AdminController extends InterfaceController{
 		if(validateOldUser())
 		{
 			System.out.println("[INFO] Prechecks Passed");
-			empData.update(updateEmployee);
+			try
+			{
+				empData.update(updateEmployee);
+			}
+			catch(EmptySetException e)
+			{
+				System.out.println("Empty Set!!");
+			}
 		}
 	}
 	
@@ -181,7 +213,11 @@ public class AdminController extends InterfaceController{
 	{
 		if(validateOldUser())
 		{
-			empData.delete(updateEmployee.getUid());
+			try {
+				empData.delete(updateEmployee.getUid());
+			} catch (EmptySetException e) {
+				System.out.println("User Not Found in Database");
+			}
 			updateEmployee = null;
 		}
 	}
@@ -233,9 +269,31 @@ public class AdminController extends InterfaceController{
 		else setValid(nPassword);
 		return flag;
 	}
-
+	
+	public void setCurrentUser()
+	{
+		System.out.println("[Interface Control] Current User Object: "+GlobalVars.current_user);
+		Employee currentUser = GlobalVars.current_user;
+		cname.setText(currentUser.getName());
+		cuid.setText("UID: "+currentUser.getUid());
+		ctype.setText("Type: "+currentUser.getType());
+		switch(currentUser.getType())
+		{
+			case "Doctor":doctorButton.setDisable(false);break;
+			case "Nurse":doctorButton.setDisable(false);break;
+			case "Staff":doctorButton.setDisable(false);break;
+		}
+	}
+	
 	public void initialize(URL location, ResourceBundle resources) {
 		resetNForm();
 		resetUForm();
+		ArrayList<Employee> temp = new ArrayList<>();
+		empData.all(temp);
+		userData = FXCollections.observableArrayList(temp);
+		uidColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getUid()));
+		userColumn.setCellValueFactory(cellData -> createProperty(""+cellData.getValue().getUserName()));
+		dateColumn.setCellValueFactory(cellData -> createProperty(dateFormat(cellData.getValue().getDateOfJoining())));
+		userTable.setItems(userData);
 	}
 }

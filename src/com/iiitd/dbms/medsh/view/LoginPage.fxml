@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.iiitd.dbms.medsh.Main">
    <center>
       <GridPane maxHeight="200.0" maxWidth="400.0" prefHeight="377.0" prefWidth="400.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -22,7 +21,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="userID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Log In the Application">
                <font>
                   <Font size="25.0" />
@@ -38,8 +37,8 @@
                   <Font size="19.0" />
                </font>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="34.0" prefWidth="80.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#tryLogin" prefHeight="34.0" prefWidth="80.0" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+            <PasswordField fx:id="userPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </center>
