@@ -1,10 +1,12 @@
 package com.iiitd.dbms.medsh.model;
 
 public class Room {
+	private long roomID;
 	private int room_no;
 	private int floor;
 	private int building;
 	private String room_type;
+	private long task_id;
 	public int getRoom_no() {
 		return room_no;
 	}
@@ -28,5 +30,17 @@ public class Room {
 	}
 	public void setRoom_type(String room_type) {
 		this.room_type = room_type;
+	}
+	public long getTask_id() {
+		return task_id;
+	}
+	public void setTask_id(long task_id) {
+		this.task_id = task_id;
+	}
+	public long getRoomID() {
+		return roomID;
+	}
+	public void setRoomID(long roomID) {
+		this.roomID = roomID;
 	}
 }

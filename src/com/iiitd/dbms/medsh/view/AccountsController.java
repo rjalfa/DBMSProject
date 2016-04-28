@@ -23,7 +23,7 @@ public class AccountsController extends InterfaceController {
 	@FXML protected Button nurseButton;
 	@FXML protected Button staffButton;
 	@FXML protected Button accountsButton;
-	@FXML protected Button logOuButton;
+	@FXML protected Button logOutButton;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

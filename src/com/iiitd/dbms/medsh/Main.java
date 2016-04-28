@@ -1,8 +1,12 @@
 package com.iiitd.dbms.medsh;
+import java.io.IOException;
+
 import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.model.Task;
 import com.iiitd.dbms.medsh.record.EmployeeRecord;
 import com.iiitd.dbms.medsh.util.GlobalVars;
 import com.iiitd.dbms.medsh.view.InterfaceController;
+import com.iiitd.dbms.medsh.view.TaskDialogController;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -10,8 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -41,7 +47,6 @@ public class Main extends Application {
 		try {
 			GlobalVars.current_user.setUid(-1);
 			FXMLLoader loader = new FXMLLoader();
-			this.primaryStage = primaryStage;
 			loader.setLocation(Main.class.getResource("view/LoginPage.fxml"));
 			BorderPane root = (BorderPane) loader.load();
 			Scene scene = new Scene(root);
@@ -50,6 +55,25 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void showTaskExpanded(long tid) throws IOException
+	{
+		Task task = null;
+		//..Load tid task in task
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("view/TaskDialog.fxml"));
+		AnchorPane page = (AnchorPane) loader.load();
+		
+		Stage dialogStage = new Stage();
+		dialogStage.setTitle("EditPerson");
+		dialogStage.initModality(Modality.WINDOW_MODAL);
+		dialogStage.initOwner(primaryStage);
+		Scene scene = new Scene(page);
+		dialogStage.setScene(scene);
+		TaskDialogController controller = loader.getController();
+		controller.displayTask(task);
+		dialogStage.showAndWait();
 	}
 	
 	public void loadGUI(Stage primaryStage, String Interface) {

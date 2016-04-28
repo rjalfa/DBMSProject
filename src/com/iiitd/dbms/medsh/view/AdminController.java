@@ -10,13 +10,14 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.model.Task;
 import com.iiitd.dbms.medsh.record.EmployeeRecord;
 import com.iiitd.dbms.medsh.util.EmptySetException;
 import com.iiitd.dbms.medsh.util.GlobalVars;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -28,8 +29,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class AdminController extends InterfaceController{
 	
@@ -44,7 +45,7 @@ public class AdminController extends InterfaceController{
 	@FXML protected Button nurseButton;
 	@FXML protected Button staffButton;
 	@FXML protected Button accountsButton;
-	@FXML protected Button logOuButton;
+	@FXML protected Button logOutButton;
 		
 	//New User Tab
 	@FXML private TextField nName;
@@ -85,8 +86,32 @@ public class AdminController extends InterfaceController{
 	@FXML private TableColumn<Employee,String> userColumn;
 	@FXML private TableColumn<Employee,String> dateColumn;
 	
+	//Listing Tasks Tab
+	private ObservableList<Task> taskData = FXCollections.observableArrayList();
+	@FXML private TableView<Task> taskTable;
+	@FXML private TableColumn<Task,String> taskIDColumn;
+	@FXML private TableColumn<Task,String> datetimeColumn;
+	@FXML private TableColumn<Task,String> typeColumn;
+	@FXML private TableColumn<Task,String> doctorIDColumn;
+	@FXML private TableColumn<Task,String> patientIDColumn;
+	@FXML private TableColumn<Task,HBox> moreColumn;
+	
 	private EmployeeRecord empData = GlobalVars.empRecord;
 	private Employee updateEmployee = null;
+	
+	@FXML private void updateTasks()
+	{
+		//get tasks from DB in taskData
+		taskTable.setVisible(true);
+		taskIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getTask_id()));
+		datetimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getDatetime()));
+		typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getTask_type())));
+		doctorIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+(cellData.getValue().getDoctorID())));
+		patientIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+(cellData.getValue().getPatient().getPid())));
+		moreColumn.setCellValueFactory(cellData -> buttonLink(cellData));
+		taskTable.setItems(taskData);
+	}
+	
 	@FXML private void resetNForm()
 	{
 		nName.setText("");
@@ -182,6 +207,7 @@ public class AdminController extends InterfaceController{
 				uDOJ.setValue(fromDate(e.getDateOfJoining()));
 				uPayroll.setText(e.getPayroll()+"");
 				uUsername.setText(e.getUserName());
+				uAdmin.setSelected(e.getIsAdmin());
 				updateEmployee = e;
 			}
 			else 

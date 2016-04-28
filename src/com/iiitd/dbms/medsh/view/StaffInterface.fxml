@@ -26,29 +26,90 @@
       </ImageView>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowSpan="3">
         <tabs>
-          <Tab text="Pharmacy">
+          <Tab text="Create Task">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-          <Tab text="Person Database">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="92.0" layoutY="101.0" prefHeight="767.0" prefWidth="448.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="239.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="10.0" prefWidth="105.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="239.0" minWidth="10.0" prefWidth="103.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Type: " GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient's Name:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Patient's DOB: " GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                              <TextField fx:id="cPatientName" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <TextField fx:id="ctaskType" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="cPatientDOB" prefHeight="26.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <TextField fx:id="cDoctorID" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Primary Doctor's ID:" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Date: " GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Time: " GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <TextField fx:id="ctaskTimeH" promptText="Hours" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <TextField fx:id="ctaskTimeM" promptText="Mins" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <DatePicker fx:id="ctaskDate" prefHeight="26.0" prefWidth="319.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                              <Button mnemonicParsing="false" onAction="#createNewTask" prefHeight="26.0" prefWidth="270.0" text="Add Task" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task ID: " GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nurse ID: " GridPane.halignment="CENTER" GridPane.rowIndex="10" />
+                              <Button mnemonicParsing="false" onAction="#createNurseTask" prefHeight="26.0" prefWidth="250.0" text="Add Nurse to Task" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="11" />
+                              <TextField fx:id="nTaskID" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                              <TextField fx:id="nNurseID" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Allocate Room">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Accept Payments">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Account Management">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="158.0" layoutY="157.0" prefHeight="767.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="426.0" minWidth="10.0" prefWidth="308.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="200.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="312.0" minWidth="10.0" prefWidth="147.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="377.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="377.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="377.0" minHeight="0.0" prefHeight="56.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="668.0" minHeight="10.0" prefHeight="613.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TableView fx:id="roomTable" prefHeight="488.0" prefWidth="620.0" GridPane.columnSpan="3" GridPane.rowIndex="3">
+                                <columns>
+                                  <TableColumn fx:id="roomIdColumn" prefWidth="75.0" text="Room ID" />
+                                  <TableColumn fx:id="roomNoColumn" prefWidth="103.0" text="Room No." />
+                                    <TableColumn fx:id="roomBuildingColumn" prefWidth="87.0" text="Building" />
+                                    <TableColumn fx:id="roomFloorColumn" prefWidth="111.0" text="Floor" />
+                                    <TableColumn fx:id="roomTypeColumn" prefWidth="114.0" text="Room Type" />
+                                    <TableColumn fx:id="roomTaskColumn" prefWidth="129.0" text="Task" />
+                                </columns>
+                              </TableView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task ID:" GridPane.halignment="CENTER" />
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Room ID:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Button mnemonicParsing="false" onAction="#assignRoomToTask" prefHeight="26.0" prefWidth="212.0" text="Assign Room to Task" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <TextField fx:id="roomTaskID" GridPane.columnIndex="1" />
+                              <TextField fx:id="roomRID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>

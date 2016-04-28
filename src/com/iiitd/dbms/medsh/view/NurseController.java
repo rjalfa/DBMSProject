@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import com.iiitd.dbms.medsh.model.Employee;
 import com.iiitd.dbms.medsh.model.Task;
 import com.iiitd.dbms.medsh.util.GlobalVars;
-import com.iiitd.dbms.medsh.util.Triple;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,11 +14,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
-public class DoctorController extends InterfaceController {
+public class NurseController extends InterfaceController {
 
 	//Current User Details
 	@FXML protected Employee currentUser;
@@ -35,32 +33,24 @@ public class DoctorController extends InterfaceController {
 	@FXML protected Button logOutButton;
 	
 	//Tabs
-	//Appointments
-	@FXML private ObservableList<Triple> procData = FXCollections.observableArrayList();
-	@FXML private TableView<Triple> procTable;
-	@FXML private TableColumn<Triple,String> taskIDColumn;
-	@FXML private TableColumn<Triple,String> datetimeColumn;
-	@FXML private TableColumn<Triple,String> ttypeColumn;
-	@FXML private TableColumn<Triple,HBox> moreColumn;
+	//Rooms
+	@FXML private ObservableList<Task> procData = FXCollections.observableArrayList();
+	@FXML private TableView<Task> procTable;
+	@FXML private TableColumn<Task,String> taskIDColumn;
+	@FXML private TableColumn<Task,String> datetimeColumn;
+	@FXML private TableColumn<Task,String> ttypeColumn;
+	@FXML private TableColumn<Task,HBox> moreColumn;
 	
-	//Patients
-	@FXML private ObservableList<Task> patientData = FXCollections.observableArrayList();
-	@FXML private TextField patientID;
-	@FXML private TableView<Task> patientTable;
-	@FXML private TableColumn<Task,String> pTaskIDColumn;
-	@FXML private TableColumn<Task,String> pDatetimeColumn;
-	@FXML private TableColumn<Task,String> pTypeColumn;
-	@FXML private TableColumn<Task,String> pDoctorColumn;
 	
-	@FXML public void searchPatientRecords()
+	@FXML public void updateTasks()
 	{
-		//..Fetch Patient Records in patientData
-		patientTable.setVisible(true);
-		pTaskIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getTask_id()));
-		pDatetimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getDatetime()));
-		pTypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getTask_type())));
-		pDoctorColumn.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getDoctorName())));
-		patientTable.setItems(patientData);
+		//Fill Tasks for the nurse in procData
+		procTable.setVisible(true);
+		taskIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getTask_id()));
+		datetimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getDatetime()));
+		ttypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTask_type()));
+		moreColumn.setCellValueFactory(cellData -> buttonLink(cellData));
+		procTable.setItems(procData);
 	}
 	
 	@Override
