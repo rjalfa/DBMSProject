@@ -1,5 +1,8 @@
 package com.iiitd.dbms.medsh.record;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.sql.rowset.JdbcRowSet;
@@ -7,12 +10,14 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
 import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.model.Patient;
 import com.iiitd.dbms.medsh.model.Task;
 import com.iiitd.dbms.medsh.util.EmptySetException;
 import com.iiitd.dbms.medsh.util.GlobalVars;
 
 public class TaskRecord {
 	private JdbcRowSet rowSet = null;
+	private Statement updates = null;
 	
 	public TaskRecord()
 	{
@@ -24,6 +29,8 @@ public class TaskRecord {
 			rowSet.setUrl(GlobalVars.DB_URL);
 			rowSet.setUsername(GlobalVars.DB_USER);
 			rowSet.setPassword(GlobalVars.DB_PASS);
+			Connection connection = DriverManager.getConnection(GlobalVars.DB_URL, GlobalVars.DB_USER, GlobalVars.DB_PASS);
+	        updates = connection.createStatement();
 			
 		}
 		catch(SQLException e)
@@ -40,14 +47,37 @@ public class TaskRecord {
 	{
 		try
 		{
+			rowSet.setCommand("SELECT * FROM Schedule where doctor_id="+t.getDoctorID());
+			rowSet.execute();
+			if(!rowSet.next())
+				{
+					updates.executeUpdate("INSERT INTO Schedule VALUES (NULL,'"+t.getDoctorID()+"')" );
+					rowSet.execute();
+				}
+			long temp = rowSet.getLong("s_id");
+			
+			rowSet.setCommand("SELECT * FROM Patient where pid="+t.getPatient().getPid());
+			rowSet.execute();
+			if(!rowSet.next())
+				{
+					updates.executeUpdate("INSERT INTO Patient VALUES (NULL,'"+t.getPatient().getDob()+"','"+t.getPatient().getName()+"')" );
+					rowSet.execute();
+				}
+			long temp2 = rowSet.getLong("pid");
+			
 			rowSet.setCommand("SELECT * FROM Task");
 			rowSet.execute();
 			rowSet.moveToInsertRow();
-			rowSet.updateInt("task_id", t.getTask_id());
-			rowSet.updateInt("pid", t.getPatient().getPid());
+//			rowSet.updateInt("task_id", t.getTask_id());
+			rowSet.updateLong("pid", temp2);
 			rowSet.updateDate("date_time", new java.sql.Date(t.getDatetime().getTime()));
 			rowSet.updateString("task_type", t.getTask_type());
+			rowSet.updateLong("s_id", temp);
+			
 			rowSet.insertRow();
+			rowSet.previous();
+			t.setTask_id(rowSet.getInt("task_id"));
+			
 		}
 		catch(SQLException ex)
 		{
@@ -95,7 +125,7 @@ public class TaskRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Task");
+			rowSet.setCommand("SELECT * FROM Task NATURAL JOIN Patient NATURAL JOIN Schedule NATURAL JOIN Doctor");
 			rowSet.execute();
 			while(rowSet.next())
 			{
@@ -143,7 +173,7 @@ public class TaskRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Task");
+			rowSet.setCommand("SELECT * FROM Task NATURAL JOIN Patient NATURAL JOIN Schedule NATURAL JOIN Doctor");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -165,7 +195,7 @@ public class TaskRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Task");
+			rowSet.setCommand("SELECT * FROM Task NATURAL JOIN Patient NATURAL JOIN Schedule NATURAL JOIN Doctor");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -187,7 +217,7 @@ public class TaskRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Task WHERE task_id="+task_id);
+			rowSet.setCommand("SELECT * FROM Task NATURAL JOIN Patient NATURAL JOIN Schedule NATURAL JOIN Doctor WHERE task_id="+task_id);
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -209,12 +239,19 @@ public class TaskRecord {
 	private Task populateData(Task t)
 	{
 		try
-		{			
+		{	
+			Patient p = new Patient();
+			p.setPid(rowSet.getInt("pid"));
+			p.setName(rowSet.getString("name"));
+			p.setDob(rowSet.getDate("dob"));
 			t.setTask_id(rowSet.getInt("task_id"));
 			t.setTask_type(rowSet.getString("task_type"));
 			t.setDatetime(rowSet.getDate("date_time"));
-			//Set Patient object from pid??
-			//t.setPatient();
+			t.setDoctorID(rowSet.getInt("uid"));
+			t.setPatient(p);
+			rowSet.setCommand("SELECT * FROM Employee NATURAL JOIN LoginDetails where uid="+t.getDoctorID());
+			rowSet.execute();
+			t.setDoctorName(rowSet.getString("name"));
 		}
 		catch(SQLException ex)
 		{
