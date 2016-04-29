@@ -155,6 +155,7 @@ public class AdminController extends InterfaceController{
 		uPayroll.setText("");
 		uUsername.setText("");
 		setValid(uUsername);
+		uUsername.setDisable(true);
 		uPassword.setText("");
 		setValid(uPassword);
 		uAdmin.setSelected(false);
@@ -245,7 +246,7 @@ public class AdminController extends InterfaceController{
 		if(validateOldUser())
 		{
 			try {
-				empData.delete(updateEmployee.getLD().getUid());
+				empData.delete(updateEmployee.getUserName());
 			} catch (EmptySetException e) {
 				System.out.println("User Not Found in Database");
 			}

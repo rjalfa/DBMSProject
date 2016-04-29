@@ -4,10 +4,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.model.LogRecord;
 import com.iiitd.dbms.medsh.util.GlobalVars;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
 public class AccountsController extends InterfaceController {
@@ -24,6 +29,18 @@ public class AccountsController extends InterfaceController {
 	@FXML protected Button staffButton;
 	@FXML protected Button accountsButton;
 	@FXML protected Button logOutButton;
+	
+	//LogRecord Table
+	protected ObservableList<LogRecord> logData = FXCollections.observableArrayList();
+	@FXML protected TableView<LogRecord> logTable;
+	@FXML protected TableColumn<LogRecord,String> lTaskID;
+	@FXML protected TableColumn<LogRecord,String> lDoctorID;
+	@FXML protected TableColumn<LogRecord,String> lStartDateID;
+	@FXML protected TableColumn<LogRecord,String> lEndDateID;
+	@FXML protected TableColumn<LogRecord,String> lTypeID;
+	
+	
+	@FXML void 
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

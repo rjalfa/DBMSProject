@@ -14,4 +14,9 @@ public class GlobalVars {
 	public static ObservableList<String> EmployeeTypes = FXCollections.observableArrayList("Doctor","Nurse","Staff","Accounts");
 	public static Employee current_user = new Employee();
 	public static EmployeeRecord empRecord = new EmployeeRecord();
+	public static String boolToString(boolean f)
+	{
+		if(f) return "1";
+		else return "0";
+	}
 }
