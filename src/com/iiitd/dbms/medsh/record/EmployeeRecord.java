@@ -1,5 +1,8 @@
 package com.iiitd.dbms.medsh.record;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.sql.rowset.JdbcRowSet;
@@ -7,13 +10,14 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
 import com.iiitd.dbms.medsh.model.Employee;
+import com.iiitd.dbms.medsh.model.LoginDetails;
 import com.iiitd.dbms.medsh.util.EmptySetException;
 import com.iiitd.dbms.medsh.util.GlobalVars;
 
 public class EmployeeRecord {
 	private Employee.EscalateAccess accessPassKey;
 	private JdbcRowSet rowSet = null;
-	
+	private Statement updates = null;
 	public void setKey(Employee.EscalateAccess key)
 	{
 		this.accessPassKey = key;
@@ -29,7 +33,8 @@ public class EmployeeRecord {
 			rowSet.setUrl(GlobalVars.DB_URL);
 			rowSet.setUsername(GlobalVars.DB_USER);
 			rowSet.setPassword(GlobalVars.DB_PASS);
-			
+			Connection connection = DriverManager.getConnection(GlobalVars.DB_URL, GlobalVars.DB_USER, GlobalVars.DB_PASS);
+	        updates = connection.createStatement();
 		}
 		catch(SQLException e)
 		{
@@ -60,6 +65,26 @@ public class EmployeeRecord {
 			e.importAccessKey(this);
 			rowSet.updateString("password",accessPassKey.getPassword());
 			rowSet.insertRow();
+			rowSet.setCommand("SELECT * FROM LoginDetails");
+			rowSet.execute();
+			rowSet.moveToInsertRow();
+			rowSet.updateString("username", e.getUserName());
+			rowSet.insertRow();
+			rowSet.setCommand("SELECT * FROM LoginDetails where username='"+e.getUserName()+"'");
+			rowSet.execute();
+			rowSet.next();
+			LoginDetails LD = new LoginDetails();
+			LD.setUid(rowSet.getLong("uid"));
+			LD.setUserName(rowSet.getString("username"));
+			e.setLD(LD);
+			System.out.println("[SYSTEM] Committed user "+e.getLD().getUid());
+			switch(e.getType())
+			{
+				case "Doctor":updates.executeUpdate("INSERT INTO Doctor VALUES ("+e.getLD().getUid()+",1)");break;
+				case "Nurse":updates.executeUpdate("INSERT INTO Nurse VALUES ("+e.getLD().getUid()+")");break;
+				case "Staff":updates.executeUpdate("INSERT INTO Staff VALUES ("+e.getLD().getUid()+",'Normal Staff')");break;
+				case "Accounts":updates.executeUpdate("INSERT INTO Staff VALUES ("+e.getLD().getUid()+",'Accountant Staff')");break;
+			}
 		}
 		catch(SQLException ex)
 		{
@@ -72,24 +97,13 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails where LoginDetails.uid="+e.getLD().getUid()+")");
+			rowSet.setCommand("SELECT * FROM Employee WHERE username=(SELECT username FROM Employee NATURAL JOIN LoginDetails where LoginDetails.uid="+e.getLD().getUid()+")");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
-			rowSet.updateString("name", e.getName());
-			rowSet.updateDate("dob", new java.sql.Date(e.getDateOfBirth().getTime()));
-			rowSet.updateString("gender", e.getGender());
-			rowSet.updateString("type", e.getType());
-			rowSet.updateString("contact", e.getContact());
-			rowSet.updateDate("doj", new java.sql.Date(e.getDateOfJoining().getTime()));
-			rowSet.updateDouble("payroll", e.getPayroll());
-			rowSet.updateString("username", e.getUserName());
-			rowSet.updateBoolean("isAdmin",e.getIsAdmin());
-			e.importAccessKey(this);
-			rowSet.updateString("password",accessPassKey.getPassword());
-			System.out.println("[RECORD:INFO] SET UPDATED USER");
-			rowSet.updateRow();
-			System.out.println("[RECORD:INFO] COMMIT UPDATED USER");
+			System.out.println("[QUERY] UPDATE Employee SET name='"+e.getName()+"',dob='"+e.getDateOfBirth()+"',gender='"+e.getGender()+"',type='"+e.getType()+"',contact='"+e.getContact()+"',doj='"+e.getDateOfJoining()+"',payroll='"+e.getPayroll()+"',isAdmin="+GlobalVars.boolToString(e.getIsAdmin())+" WHERE username='"+e.getUserName()+"'");
+			updates.executeUpdate("UPDATE Employee SET name='"+e.getName()+"',dob='"+e.getDateOfBirth()+"',gender='"+e.getGender()+"',type='"+e.getType()+"',contact='"+e.getContact()+"',doj='"+e.getDateOfJoining()+"',payroll='"+e.getPayroll()+"',isAdmin="+GlobalVars.boolToString(e.getIsAdmin())+" WHERE username='"+e.getUserName()+"'");
+			
 		}
 		catch(EmptySetException ex)
 		{
@@ -114,7 +128,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee");
+			rowSet.setCommand("SELECT * FROM Employee NATURAL JOIN LoginDetails");
 			rowSet.execute();
 			while(rowSet.next())
 			{
@@ -130,11 +144,11 @@ public class EmployeeRecord {
 		return arr;
 	}
 	
-	public void delete(long uid) throws EmptySetException
+	public void delete(String username) throws EmptySetException
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails WHERE LoginDetails.uid="+uid+")");
+			rowSet.setCommand("SELECT * FROM Employee WHERE username=\""+username+"\"");
 			rowSet.execute();
 			if(!rowSet.next()) if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -162,7 +176,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee");
+			rowSet.setCommand("SELECT * FROM Employee NATURAL JOIN LoginDetails");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -184,7 +198,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee");
+			rowSet.setCommand("SELECT * FROM Employee NATURAL JOIN LoginDetails");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -206,7 +220,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails WHERE LoginDetails.uid="+uid+")");
+			rowSet.setCommand("SELECT * FROM Employee NATURAL JOIN LoginDetails WHERE uid=(SELECT uid FROM Employee NATURAL JOIN LoginDetails WHERE LoginDetails.uid="+uid+")");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -228,7 +242,7 @@ public class EmployeeRecord {
 	{
 		try
 		{
-			rowSet.setCommand("SELECT * FROM Employee WHERE username=\""+username+"\"");
+			rowSet.setCommand("SELECT * FROM Employee NATURAL JOIN LoginDetails WHERE username=\""+username+"\"");
 			rowSet.execute();
 			if(!rowSet.next()) throw new EmptySetException();
 			else {rowSet.beforeFirst();rowSet.next();}
@@ -250,7 +264,10 @@ public class EmployeeRecord {
 	{
 		try
 		{
-//			e.setUid(rowSet.getLong("uid"));
+			LoginDetails ld = new LoginDetails();
+			ld.setUid(rowSet.getLong("uid"));
+			ld.setUserName(rowSet.getString("username"));
+			e.setLD(ld);
 			e.setName(rowSet.getString("name"));
 			e.setDateOfBirth(rowSet.getDate("dob"));
 			e.setGender(rowSet.getString("gender"));
