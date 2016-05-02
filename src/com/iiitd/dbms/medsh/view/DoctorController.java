@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 import com.iiitd.dbms.medsh.model.Employee;
 import com.iiitd.dbms.medsh.model.Task;
 import com.iiitd.dbms.medsh.util.GlobalVars;
-import com.iiitd.dbms.medsh.util.Triple;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -36,12 +35,12 @@ public class DoctorController extends InterfaceController {
 	
 	//Tabs
 	//Appointments
-	@FXML private ObservableList<Triple> procData = FXCollections.observableArrayList();
-	@FXML private TableView<Triple> procTable;
-	@FXML private TableColumn<Triple,String> taskIDColumn;
-	@FXML private TableColumn<Triple,String> datetimeColumn;
-	@FXML private TableColumn<Triple,String> ttypeColumn;
-	@FXML private TableColumn<Triple,HBox> moreColumn;
+	@FXML private ObservableList<Task> procData = FXCollections.observableArrayList();
+	@FXML private TableView<Task> procTable;
+	@FXML private TableColumn<Task,String> taskIDColumn;
+	@FXML private TableColumn<Task,String> datetimeColumn;
+	@FXML private TableColumn<Task,String> ttypeColumn;
+	@FXML private TableColumn<Task,HBox> moreColumn;
 	
 	//Patients
 	@FXML private ObservableList<Task> patientData = FXCollections.observableArrayList();
@@ -51,6 +50,18 @@ public class DoctorController extends InterfaceController {
 	@FXML private TableColumn<Task,String> pDatetimeColumn;
 	@FXML private TableColumn<Task,String> pTypeColumn;
 	@FXML private TableColumn<Task,String> pDoctorColumn;
+	
+	@FXML private void updateTasks()
+	{
+		//get tasks from DB in taskData
+		GlobalVars.taskRecord.getTasksForDoctor(procData,GlobalVars.current_user.getLD().getUid());
+		procTable.setVisible(true);
+		taskIDColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getTask_id()));
+		datetimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getDatetime()));
+		ttypeColumn.setCellValueFactory(cellData -> new SimpleStringProperty((cellData.getValue().getTask_type())));
+		moreColumn.setCellValueFactory(cellData -> buttonLink(cellData));
+		procTable.setItems(procData);
+	}
 	
 	@FXML public void searchPatientRecords()
 	{

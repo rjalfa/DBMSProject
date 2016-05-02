@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class LogRecord {
 	private int id;
+	private long did;
 	private Date date_in;
 	private Date date_out;
 	private String appt_type;
@@ -44,5 +45,11 @@ public class LogRecord {
 	}
 	public void setPaid(boolean isPaid) {
 		this.isPaid = isPaid;
+	}
+	public long getDid() {
+		return did;
+	}
+	public void setDid(long did) {
+		this.did = did;
 	}
 }

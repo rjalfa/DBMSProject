@@ -9,11 +9,12 @@ import javax.sql.rowset.JdbcRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
-import com.iiitd.dbms.medsh.model.Employee;
 import com.iiitd.dbms.medsh.model.Patient;
 import com.iiitd.dbms.medsh.model.Task;
 import com.iiitd.dbms.medsh.util.EmptySetException;
 import com.iiitd.dbms.medsh.util.GlobalVars;
+
+import javafx.collections.ObservableList;
 
 public class TaskRecord {
 	private JdbcRowSet rowSet = null;
@@ -54,36 +55,53 @@ public class TaskRecord {
 					updates.executeUpdate("INSERT INTO Schedule VALUES (NULL,'"+t.getDoctorID()+"')" );
 					rowSet.execute();
 				}
+			rowSet.execute();
+			rowSet.next();
 			long temp = rowSet.getLong("s_id");
 			
-			rowSet.setCommand("SELECT * FROM Patient where pid="+t.getPatient().getPid());
+			//rowSet.setCommand("SELECT * FROM Patient");
+			//rowSet.execute();
+			//if(!rowSet.next())
+			//{
+				updates.executeUpdate("INSERT INTO Patient VALUES (NULL,'"+(new java.sql.Date(t.getPatient().getDob().getTime()))+"','"+t.getPatient().getName()+"')" );
+			//}
+			rowSet.setCommand("SELECT * FROM Patient where name='"+t.getPatient().getName()+"'");
 			rowSet.execute();
-			if(!rowSet.next())
-				{
-					updates.executeUpdate("INSERT INTO Patient VALUES (NULL,'"+t.getPatient().getDob()+"','"+t.getPatient().getName()+"')" );
-					rowSet.execute();
-				}
+			rowSet.next();
 			long temp2 = rowSet.getLong("pid");
 			
 			rowSet.setCommand("SELECT * FROM Task");
 			rowSet.execute();
 			rowSet.moveToInsertRow();
-//			rowSet.updateInt("task_id", t.getTask_id());
 			rowSet.updateLong("pid", temp2);
 			rowSet.updateDate("date_time", new java.sql.Date(t.getDatetime().getTime()));
 			rowSet.updateString("task_type", t.getTask_type());
 			rowSet.updateLong("s_id", temp);
 			
 			rowSet.insertRow();
-			rowSet.previous();
 			t.setTask_id(rowSet.getInt("task_id"));
-			
 		}
 		catch(SQLException ex)
 		{
 			ex.printStackTrace();
 		}
 		return t;
+	}
+	
+	public void getTasksForDoctor(ObservableList<Task> t,long uid)
+	{
+		try {
+			rowSet.setCommand("SELECT * FROM Task NATURAL JOIN Patient NATURAL JOIN Schedule NATURAL JOIN Doctor WHERE uid="+uid);
+			while(rowSet.next())
+			{
+				Task tr = new Task();
+				populateData(tr);
+				t.add(tr);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Task update(Task t) throws EmptySetException

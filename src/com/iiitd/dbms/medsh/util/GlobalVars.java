@@ -2,6 +2,7 @@ package com.iiitd.dbms.medsh.util;
 
 import com.iiitd.dbms.medsh.model.Employee;
 import com.iiitd.dbms.medsh.record.EmployeeRecord;
+import com.iiitd.dbms.medsh.record.TaskRecord;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ public class GlobalVars {
 	public static ObservableList<String> EmployeeTypes = FXCollections.observableArrayList("Doctor","Nurse","Staff","Accounts");
 	public static Employee current_user = new Employee();
 	public static EmployeeRecord empRecord = new EmployeeRecord();
+	public static TaskRecord taskRecord = new TaskRecord();
 	public static String boolToString(boolean f)
 	{
 		if(f) return "1";

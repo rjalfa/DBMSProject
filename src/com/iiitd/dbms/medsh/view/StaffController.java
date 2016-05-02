@@ -92,7 +92,7 @@ public class StaffController extends InterfaceController {
 			task.setDoctorID(Long.parseLong(cDoctorID.getText()));
 			task.setPatient(p);
 			task.setDatetime(Date.from(ctaskDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant().plusSeconds(Integer.parseInt(ctaskTimeH.getText())*3600+Integer.parseInt(ctaskTimeM.getText())*60)));
-			//commit task to db
+			GlobalVars.taskRecord.create(task);
 		}
 	}
 	

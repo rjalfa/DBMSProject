@@ -7,6 +7,7 @@ import com.iiitd.dbms.medsh.model.Employee;
 import com.iiitd.dbms.medsh.model.LogRecord;
 import com.iiitd.dbms.medsh.util.GlobalVars;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -40,7 +41,16 @@ public class AccountsController extends InterfaceController {
 	@FXML protected TableColumn<LogRecord,String> lTypeID;
 	
 	
-	@FXML void 
+	@FXML private void loadLogRecords()
+	{
+		//..logData <- data
+		logTable.setVisible(true);
+		lTaskID.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getId()));
+		lDoctorID.setCellValueFactory(cellData -> new SimpleStringProperty(""+cellData.getValue().getDid()));
+		lStartDateID.setCellValueFactory(cellData -> new SimpleStringProperty(""+(cellData.getValue().getDate_in())));
+		//lEndDateID.setCellValueFactory(cellData -> new SimpleStringProperty(""+(cellData.getValue().getDoctorName())));
+		
+	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
